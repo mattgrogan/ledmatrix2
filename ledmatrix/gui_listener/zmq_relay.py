@@ -4,6 +4,7 @@ send commands to the server process.
 """
 
 import zmq
+import argparse
 
 class ZmqRelay(object):
 
@@ -19,11 +20,8 @@ class ZmqRelay(object):
         """ Send a message to the ZMQ process """
 
         try:
-            print "Connecting"
             self.socket.connect(self.addr)
-            print "sending"
             self.socket.send(msg)
-            print "sent"
         except zmq.ZMQError:
             print "Unable to connect to %s" % self.addr
 
@@ -48,6 +46,36 @@ class ZmqRelay(object):
     def send_playpause(self):
         self.send("KEY_PLAYPAUSE")
 
+def main():
+    
+    parser = argparse.ArgumentParser(description="ZMQ Controller")
+    parser.add_argument("-m", 
+                        choices=["up", "down", "left", "right", "enter", "mode", "playpause"],
+                        required=False)
+    args = parser.parse_args()
+
+    relay = ZmqRelay()
+
+    if args.m == "up":
+        relay.send_up()
+    elif args.m == "down":
+        relay.send_down()
+    elif args.m == "right":
+        relay.send_right()
+    elif args.m == "left":
+        relay.send_left()
+    elif args.m == "enter":
+        relay.send_enter()
+    elif args.m == "mode":
+        relay.send_mode()
+    elif args.m == "playpause":
+        relay.send_playpause()
+
+if __name__ == "__main__":
+  try:
+    main()
+  except KeyboardInterrupt:
+    pass
 
     
 
