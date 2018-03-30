@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from gui.gui import Gui
 
 def main():
