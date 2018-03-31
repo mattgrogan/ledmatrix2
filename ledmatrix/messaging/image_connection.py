@@ -8,7 +8,7 @@ from PIL import Image
 
 #import time
 
-HOST = "LOCALHOST"
+HOST = "localhost"
 PORT = 5556
 
 IMAGE_MODE = "RGB"
