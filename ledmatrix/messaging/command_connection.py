@@ -108,6 +108,8 @@ def main():
 
         if args.s == "up":
             conn.send_up()
+            conn.send_down()
+            conn.send_enter()
         elif args.s == "down":
             conn.send_down()
         elif args.s == "right":
