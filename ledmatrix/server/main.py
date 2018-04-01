@@ -12,7 +12,7 @@ FPS = 60
 CMD_HOST = "*"
 CMD_PORT = 5555
 
-IMG_HOST = "localhost"
+IMG_HOST = "*"
 IMG_PORT = 5556
 
 SECS_PER_FRAME = 1.0 / FPS

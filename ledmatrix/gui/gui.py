@@ -17,7 +17,7 @@ GUI_ZOOM = 16
 CMD_HOST = "localhost"
 CMD_PORT = 5555
 
-IMG_HOST = "*"
+IMG_HOST = "localhost"
 IMG_PORT = 5556
 
 class Gui(tk.Tk):

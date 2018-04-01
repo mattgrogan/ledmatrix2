@@ -16,6 +16,8 @@ IMAGE_SIZE = (32, 32)
 
 TIMEOUT = 1
 
+IMAGE_TOPIC = "IMG"
+
 class ImageConnection(object):
 
     def connect(self, host, port, as_receiver=False):
@@ -31,11 +33,12 @@ class ImageConnection(object):
         self.context = zmq.Context()
 
         if as_receiver:
-            self.socket = self.context.socket(zmq.PULL)
-            self.socket.bind(self.addr)
-        else:
-            self.socket = self.context.socket(zmq.PUSH)
+            self.socket = self.context.socket(zmq.SUB)
             self.socket.connect(self.addr)
+            self.socket.setsockopt(zmq.SUBSCRIBE, IMAGE_TOPIC)
+        else:
+            self.socket = self.context.socket(zmq.PUB)
+            self.socket.bind(self.addr) 
 
     def receive(self, mode=IMAGE_MODE, size=IMAGE_SIZE, timeout=TIMEOUT):
         """ Receive an image if one has been received, otherwise return None """
@@ -46,8 +49,9 @@ class ImageConnection(object):
 
         while self.socket.poll(timeout=timeout):
             # Loop until the last image is received
+
             image = self.socket.recv()
-            im = Image.fromstring(mode, size, image)
+            im = Image.fromstring(mode, size, image[len(IMAGE_TOPIC):])
 
         return im
 
@@ -60,7 +64,7 @@ class ImageConnection(object):
         assert im.size == IMAGE_SIZE
 
         try:
-            self.socket.send(im.tostring())
+            self.socket.send(IMAGE_TOPIC + im.tostring())
         except zmq.ZMQError:
             print "Unable to send image on %s" % self.addr
 
