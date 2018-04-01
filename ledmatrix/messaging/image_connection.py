@@ -44,9 +44,8 @@ class ImageConnection(object):
 
         im = None
 
-        events = self.socket.poll(timeout=timeout)
-
-        if events:
+        while self.socket.poll(timeout=timeout):
+            # Loop until the last image is received
             image = self.socket.recv()
             im = Image.fromstring(mode, size, image)
 

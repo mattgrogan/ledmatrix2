@@ -8,6 +8,8 @@ import zmq
 HOST = "localhost"
 PORT = 5555
 
+TIMEOUT = 1
+
 class CommandConnection(object):
 
     def connect(self, host, port, as_receiver=False):
@@ -36,7 +38,8 @@ class CommandConnection(object):
 
         cmd = None
 
-        events = self.socket.poll(timeout=1)
+        events = self.socket.poll(timeout=TIMEOUT)
+
         if events:
             cmd = self.socket.recv()
 
