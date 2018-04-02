@@ -2,13 +2,15 @@ import time
 from PIL import Image
 import pygame, pygame.freetype
 
+from util.timedelta import TimeDelta
+
 class PygameText(object):
 
     def enter(self):
         pygame.freetype.init()
         self.font = pygame.freetype.Font("fonts/small_pixel.ttf", 8)
         self.camera = pygame.Rect(32, 32, 32, 32)
-        self.last_update = time.time()
+        self.timedelta = TimeDelta().reset()
 
         self.xspeed = 20
         self.yspeed = 0
@@ -18,14 +20,14 @@ class PygameText(object):
         render_needed = False
 
         # Does the camera need to move?
-        delta = time.time() - self.last_update
+        delta = self.timedelta.delta()
 
         xdist = int(self.xspeed * delta)
         ydist = int(self.yspeed * delta)
 
         if xdist != 0 or ydist != 0:
             self.camera.move_ip(xdist, ydist)
-            self.last_update = time.time()
+            self.timedelta.reset()
             render_needed = True
 
         return render_needed
@@ -39,7 +41,7 @@ class PygameText(object):
         w += 2 * 32
         h += 2 * 32
         s = pygame.Surface((w, h), pygame.SRCALPHA, 32)
-        s.set_alpha(128)
+        s.set_alpha(0)
 
         # Add the text
         #s.fill(pygame.Color("#333333"))

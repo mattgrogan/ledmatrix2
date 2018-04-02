@@ -11,6 +11,9 @@ from messaging.image_connection import ImageConnection
 from server.pygame_text import PygameText
 from server.pygame_box import PygameBox
 
+
+from server.components.gif_screen_layer import GifScreenLayer
+
 FPS = 60
 
 CMD_HOST = "*"
@@ -36,7 +39,7 @@ def main():
     box = PygameBox()
     box.enter()
 
-    txt = PygameText()
+    txt = GifScreenLayer("ufo.gif")
     txt.enter()
 
     while(not done):
@@ -128,71 +131,6 @@ class Animation(object):
         #print "Drawing at %s" % self.pos
 
         return self.im.crop(box=(0, 0, 32, 32))
-
-class GifState(object):
-
-    def __init__(self):
-        self.im = None
-        self.frame = None
-        self.last_step = None
-        self.dur = None
-
-    def enter(self):
-        self.frame = 0
-        self.im = Image.open("ufo.gif")
-
-        self.last_step = time.time()
-        self.dur = 0
-
-        self.step()
-
-    def exit(self):
-        self.frame = None
-        self.im = None
-        self.last_step = None
-        self.dur = None
-
-    def suspend(self):
-        pass
-
-    def resume(self):
-        pass
-
-    def step(self):
-        """ Advance the frame if duration has passed. Return True if 
-            rendering is required.
-        """
-
-        is_updated = False
-
-        if time.time() >= self.last_step + self.dur:
-            
-            # Advance frame
-            try:
-                self.dur = self.im.info["duration"] / 1000.0
-            except KeyError:
-                self.dur = 25 / 1000.0
-
-            try:
-                self.im.seek(self.frame)
-                self.frame += 1
-            except EOFError:
-                self.frame = 0
-                self.im.seek(self.frame)
-
-            self.last_step = time.time()
-
-            is_updated = True
-
-        return is_updated
-
-    def render(self):
-
-        im_copy = self.im.copy()
-        im_copy = im_copy.convert("RGB")
-
-        return im_copy
-
 
 if __name__ == "__main__":
   try:
