@@ -1,14 +1,16 @@
 from server.screen_manager import ScreenManager
 
 from server.components.gif import GifScreenFactory
+from server.components.info_screen import InfoScreen
 
 class MainScreenManager(ScreenManager):
 
     def __init__(self):
 
+        info_screen = InfoScreen()
         gif_screen = GifScreenFactory().from_folder("./icons/gifs/")
 
-        self.screens = [gif_screen]
+        self.screens = [info_screen, gif_screen]
         self.current_item = 0
 
     def enter(self):
