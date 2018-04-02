@@ -2,6 +2,7 @@ from PIL import Image
 
 from server.screen import Screen
 from server.components.scrolling_text import ScrollingText
+from server.components.gif import GifScreenFactory
 
 SCREEN_WIDTH = 32
 SCREEN_HEIGHT = 32
@@ -15,7 +16,13 @@ class InfoScreen(Screen):
 
         txt = ScrollingText("Welcome to my world!", xspeed=20)
 
-        self.add_layer(txt, (0, 0))
+        self.add_layer(txt, (9, 2))
+
+        icon_file = "icons/gif_icons/1624_icon_thumb.gif"
+        icon = GifScreenFactory().from_icon(icon_file)
+
+
+        self.add_layer(icon, (0, 0))
 
         #self.add_layer(ScrollingText(), (10, 20))
 

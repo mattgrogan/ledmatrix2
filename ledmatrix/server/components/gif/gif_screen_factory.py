@@ -2,6 +2,7 @@ import os, glob
 
 from server.components.gif.gif_screen import GifScreen
 from server.components.gif.gif_screen_layer import GifScreenLayer
+from server.components.gif.gif_icon_wrapper import GifIconWrapper
 
 class GifScreenFactory(object):
 
@@ -30,3 +31,9 @@ class GifScreenFactory(object):
     def from_file(self, filename):
         """ Create a gif screen from a single file """
         raise NotImplementedError
+
+    def from_icon(self, filename):
+        current_dir = os.getcwd()
+        filename = os.path.normpath(os.path.join(current_dir, filename))
+        
+        return GifIconWrapper(filename)

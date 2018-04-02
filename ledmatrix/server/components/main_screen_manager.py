@@ -8,7 +8,7 @@ class MainScreenManager(ScreenManager):
     def __init__(self):
 
         info_screen = InfoScreen()
-        gif_screen = GifScreenFactory().from_folder("./icons/gifs/")
+        gif_screen = GifScreenFactory().from_folder("icons/gifs/")
 
         self.screens = [info_screen, gif_screen]
         self.current_item = 0
