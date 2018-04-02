@@ -10,15 +10,19 @@ MATRIX_HEIGHT = 32
 
 class ScrollingText(ScreenLayer):
 
+    def __init__(self, text, size="MEDIUM", color="#FFFFFF", xspeed=0, yspeed=0):
+        self.text = text
+        self.size = size
+        self.color = color
+        self.xspeed = xspeed
+        self.yspeed = yspeed
+
     def enter(self):
         pygame.freetype.init()
 
-        self.font = FontFactory().by_size("SMALL")
+        self.font = FontFactory().by_size(self.size)
         self.camera = pygame.Rect(MATRIX_WIDTH, MATRIX_HEIGHT, MATRIX_WIDTH, MATRIX_HEIGHT)
         self.timedelta = TimeDelta().reset()
-
-        self.xspeed = 32
-        self.yspeed = 0
 
     def exit(self):
         pass
@@ -42,7 +46,7 @@ class ScrollingText(ScreenLayer):
 
     def render(self):
 
-        text, text_box = self.font.render("Hello World", pygame.Color("#FFFFFF"))
+        text, text_box = self.font.render(self.text, pygame.Color(self.color))
 
         # Add margins to drawing area
         w, h = text.get_size()

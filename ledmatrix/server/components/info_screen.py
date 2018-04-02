@@ -13,7 +13,9 @@ class InfoScreen(Screen):
         self.layers = []
         self.positions = []
 
-        self.add_layer(ScrollingText(), (0, 0))
+        txt = ScrollingText("Welcome to my world!", xspeed=20)
+
+        self.add_layer(txt, (0, 0))
 
         #self.add_layer(ScrollingText(), (10, 20))
 
