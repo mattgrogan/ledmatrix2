@@ -1,1 +1,1 @@
-from gif_screen import GifScreen
+from gif_screen_factory import GifScreenFactory

@@ -11,7 +11,6 @@ class GifScreenLayer(ScreenLayer):
 
     def __init__(self, filename):
         self.filename = filename
-        self.im = Image.open(filename)
         self.is_playing = False
 
     def _get_duration(self):
@@ -38,6 +37,8 @@ class GifScreenLayer(ScreenLayer):
 
     def enter(self):
         """ Reset the animation to the beginning """
+
+        self.im = Image.open(self.filename)
 
         self.frame = 0
         self.timedelta = TimeDelta().reset()
