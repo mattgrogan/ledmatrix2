@@ -60,8 +60,10 @@ class ImageConnection(object):
 
         assert not self.as_receiver
 
-        assert im.mode == IMAGE_MODE
+        #assert im.mode == IMAGE_MODE
         assert im.size == IMAGE_SIZE
+
+        im = im.convert(IMAGE_MODE)
 
         try:
             self.socket.send(IMAGE_TOPIC + im.tostring())

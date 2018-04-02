@@ -9,6 +9,7 @@ from messaging.command_connection import CommandConnection
 from messaging.image_connection import ImageConnection
 
 from server.pygame_text import PygameText
+from server.pygame_box import PygameBox
 
 FPS = 60
 
@@ -32,8 +33,11 @@ def main():
     img_connection = ImageConnection()
     img_connection.connect(IMG_HOST, IMG_PORT, as_receiver=False)
 
-    gif = PygameText()
-    gif.enter()
+    box = PygameBox()
+    box.enter()
+
+    txt = PygameText()
+    txt.enter()
 
     while(not done):
 
@@ -44,14 +48,19 @@ def main():
         cmd = cmd_connection.receive()
 
         # Update state
-        render = gif.step()
+        render_box = box.step()
+        render_txt = txt.step()
 
         # Render
         if cmd is not None:
             print cmd
 
-        if render:
-            img_connection.send(gif.render()) 
+        box_img = box.render()
+        txt_img = txt.render()
+
+        box_img.paste(txt_img, mask=txt_img)
+
+        img_connection.send(box_img) 
 
         # Elapse time
         sleep_time = max(start_time + SECS_PER_FRAME - time.time(), 0)

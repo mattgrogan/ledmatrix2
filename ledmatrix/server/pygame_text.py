@@ -7,7 +7,6 @@ class PygameText(object):
     def enter(self):
         pygame.freetype.init()
         self.font = pygame.freetype.Font("fonts/small_pixel.ttf", 8)
-        print self.font.get_sizes()
         self.camera = pygame.Rect(32, 32, 32, 32)
         self.last_update = time.time()
 
@@ -39,10 +38,11 @@ class PygameText(object):
         w, h = text.get_size()
         w += 2 * 32
         h += 2 * 32
-        s = pygame.Surface((w, h))
+        s = pygame.Surface((w, h), pygame.SRCALPHA, 32)
+        s.set_alpha(128)
 
         # Add the text
-        s.fill(pygame.Color("#333333"))
+        #s.fill(pygame.Color("#333333"))
         s.blit(text, (32, 32))
 
         # Check for overflow
@@ -61,8 +61,8 @@ class PygameText(object):
         view = s.subsurface(self.camera)
 
         # Convert to PIL image for display
-        img_str = pygame.image.tostring(view, "RGB", False)
-        im = Image.fromstring("RGB", view.get_size(), img_str)
+        img_str = pygame.image.tostring(view, "RGBA")
+        im = Image.fromstring("RGBA", view.get_size(), img_str)
 
         return im
 
