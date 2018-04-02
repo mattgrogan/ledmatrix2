@@ -3,7 +3,10 @@ class ScreenManager(object):
     def __init__(self):
         pass
 
-    def handle_input(self):
+    def enter(self):
+        raise NotImplementedError
+
+    def handle_input(self, cmd):
         raise NotImplementedError
 
     def step(self):
@@ -11,8 +14,3 @@ class ScreenManager(object):
 
     def render(self):
         raise NotImplementedError
-
-class MainScreenManager(ScreenManager):
-
-    def __init__(self):
-        pass

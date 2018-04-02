@@ -7,7 +7,7 @@ from util.timedelta import TimeDelta
 
 DEFAULT_DURATION = 25.0 # milliseconds
 
-class GifScreenLayer(object):
+class GifScreenLayer(ScreenLayer):
 
     def __init__(self, filename):
         self.filename = filename

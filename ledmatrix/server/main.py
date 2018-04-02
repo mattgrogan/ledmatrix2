@@ -12,7 +12,7 @@ from server.pygame_text import PygameText
 from server.pygame_box import PygameBox
 
 
-from server.components.gif_screen_layer import GifScreenLayer
+from server.components.main_screen_manager import MainScreenManager
 
 FPS = 60
 
@@ -36,11 +36,8 @@ def main():
     img_connection = ImageConnection()
     img_connection.connect(IMG_HOST, IMG_PORT, as_receiver=False)
 
-    box = PygameBox()
-    box.enter()
-
-    txt = GifScreenLayer("ufo.gif")
-    txt.enter()
+    screen_manager = MainScreenManager()
+    screen_manager.enter()
 
     while(not done):
 
@@ -49,21 +46,23 @@ def main():
 
         # Check for input
         cmd = cmd_connection.receive()
+        screen_manager.handle_input(cmd)
 
         # Update state
-        render_box = box.step()
-        render_txt = txt.step()
+        screen_manager.step()
 
         # Render
         if cmd is not None:
             print cmd
 
-        box_img = box.render()
-        txt_img = txt.render()
+        #box_img = box.render()
+        #txt_img = txt.render()
 
-        box_img.paste(txt_img, mask=txt_img)
+        #box_img.paste(txt_img, mask=txt_img)
 
-        img_connection.send(box_img) 
+        im = screen_manager.render()
+
+        img_connection.send(im) 
 
         # Elapse time
         sleep_time = max(start_time + SECS_PER_FRAME - time.time(), 0)
