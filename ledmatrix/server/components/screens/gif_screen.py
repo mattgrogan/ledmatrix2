@@ -1,4 +1,4 @@
-from server.screen import Screen
+from server.components.screens.screen import Screen
 
 class GifScreen(Screen):
 

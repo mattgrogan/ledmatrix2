@@ -1,7 +1,7 @@
 from PIL import Image
 import pygame
 
-from server.screen_layer import ScreenLayer
+from server.components.layers.screen_layer import ScreenLayer
 from util.timedelta import TimeDelta
 from util.font_factory import FontFactory
 

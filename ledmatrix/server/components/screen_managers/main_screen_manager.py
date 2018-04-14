@@ -1,7 +1,7 @@
-from server.screen_manager import ScreenManager
+from server.components.screen_managers.screen_manager import ScreenManager
 
-from server.components.gif import GifScreenFactory
-from server.components.info_screen import InfoScreen
+from server.components.screens.gif_screen_factory import GifScreenFactory
+from server.components.screens.info_screen import InfoScreen
 
 class MainScreenManager(ScreenManager):
 

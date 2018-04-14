@@ -1,6 +1,6 @@
 from PIL import Image
 
-from server.components.gif.gif_screen_layer import GifScreenLayer
+from server.components.layers.gif_screen_layer import GifScreenLayer
 
 ICON_WIDTH = 8
 ICON_HEIGHT = 8
@@ -11,7 +11,7 @@ Y_OFFSET = 3
 X_MULT = 5
 Y_MULT = 5
 
-class GifIconWrapper(object):
+class GifIconLayer(object):
     """ Act as a proxy to reformat the GIF Icons to the proper size """
 
     def __init__(self, filename):

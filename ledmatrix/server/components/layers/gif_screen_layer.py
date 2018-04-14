@@ -2,7 +2,7 @@ from __future__ import division
 
 from PIL import Image
 
-from server.screen_layer import ScreenLayer
+from server.components.layers.screen_layer import ScreenLayer
 from util.timedelta import TimeDelta
 
 DEFAULT_DURATION = 25.0 # milliseconds

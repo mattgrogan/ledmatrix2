@@ -1,8 +1,8 @@
 from PIL import Image
 
-from server.screen import Screen
-from server.components.scrolling_text import ScrollingText
-from server.components.gif import GifScreenFactory
+from server.components.screens.screen import Screen
+from server.components.layers.scrolling_text_layer import ScrollingText
+from server.components.screens.gif_screen_factory import GifScreenFactory
 
 SCREEN_WIDTH = 32
 SCREEN_HEIGHT = 32
@@ -14,17 +14,14 @@ class InfoScreen(Screen):
         self.layers = []
         self.positions = []
 
-        txt = ScrollingText("Welcome to my world!", xspeed=20)
+        txt = ScrollingText("Welcome to my world!", xspeed=10)
 
-        self.add_layer(txt, (9, 2))
+        self.add_layer(txt, (0, 10))
 
         icon_file = "icons/gif_icons/1624_icon_thumb.gif"
         icon = GifScreenFactory().from_icon(icon_file)
 
-
         self.add_layer(icon, (0, 0))
-
-        #self.add_layer(ScrollingText(), (10, 20))
 
     def add_layer(self, layer, pos):
         self.layers.append(layer)

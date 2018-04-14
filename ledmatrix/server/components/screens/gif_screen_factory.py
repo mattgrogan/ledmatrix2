@@ -1,8 +1,8 @@
 import os, glob
 
-from server.components.gif.gif_screen import GifScreen
-from server.components.gif.gif_screen_layer import GifScreenLayer
-from server.components.gif.gif_icon_wrapper import GifIconWrapper
+from server.components.screens.gif_screen import GifScreen
+from server.components.layers.gif_screen_layer import GifScreenLayer
+from server.components.layers.gif_icon_layer import GifIconLayer
 
 class GifScreenFactory(object):
 
@@ -36,4 +36,4 @@ class GifScreenFactory(object):
         current_dir = os.getcwd()
         filename = os.path.normpath(os.path.join(current_dir, filename))
         
-        return GifIconWrapper(filename)
+        return GifIconLayer(filename)

@@ -8,11 +8,7 @@ from PIL import Image, ImageFont, ImageDraw
 from messaging.command_connection import CommandConnection
 from messaging.image_connection import ImageConnection
 
-from server.pygame_text import PygameText
-from server.pygame_box import PygameBox
-
-
-from server.components.main_screen_manager import MainScreenManager
+from server.components.screen_managers.main_screen_manager import MainScreenManager
 
 FPS = 60
 
@@ -55,11 +51,6 @@ def main():
         if cmd is not None:
             print cmd
 
-        #box_img = box.render()
-        #txt_img = txt.render()
-
-        #box_img.paste(txt_img, mask=txt_img)
-
         im = screen_manager.render()
 
         img_connection.send(im) 
@@ -68,6 +59,7 @@ def main():
         sleep_time = max(start_time + SECS_PER_FRAME - time.time(), 0)
         time.sleep(sleep_time)
 
+"""
 class Vector(object):
 
     def __init__(self, x=None, y=None):
@@ -130,6 +122,7 @@ class Animation(object):
         #print "Drawing at %s" % self.pos
 
         return self.im.crop(box=(0, 0, 32, 32))
+"""
 
 if __name__ == "__main__":
   try:
