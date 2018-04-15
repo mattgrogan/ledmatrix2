@@ -11,10 +11,11 @@ class TextLayer(ScreenLayer):
         self.size = size
         self.color = color
 
-    def enter(self):
         pygame.freetype.init()
-
         self.font = FontFactory().by_size(self.size)
+
+    def enter(self):
+        pass
 
     def exit(self):
         pass

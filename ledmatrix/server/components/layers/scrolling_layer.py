@@ -3,38 +3,38 @@ import pygame
 
 from server.components.layers.screen_layer import ScreenLayer
 from util.timedelta import TimeDelta
-from util.font_factory import FontFactory
 
-MATRIX_WIDTH = 32
-MATRIX_HEIGHT = 32
+class ScrollingLayer(ScreenLayer):
 
-class ScrollingText(ScreenLayer):
-
-    def __init__(self, text, size="MEDIUM", color="#FFFFFF", xspeed=0, yspeed=0):
-        self.text = text
-        self.size = size
-        self.color = color
+    def __init__(self, device, layer, xspeed=0, yspeed=0):
+        self.device = device
+        self.layer = layer
         self.xspeed = xspeed
         self.yspeed = yspeed
 
     def enter(self):
-        pygame.freetype.init()
+        w, h = self.device.size
 
-        self.font = FontFactory().by_size(self.size)
-        self.camera = pygame.Rect(MATRIX_WIDTH, MATRIX_HEIGHT, MATRIX_WIDTH, MATRIX_HEIGHT)
+        # Initialize the camera at w, h because
+        # we will add margins to all sides
+        self.camera = pygame.Rect(w, h, w, h)
         self.timedelta = TimeDelta().reset()
 
     def exit(self):
-        pass
+        self.layer.exit()
 
     def suspend(self):
-        pass
+        self.layer.suspend()
 
     def resume(self):
-        pass
+        self.layer.resume()
 
     def step(self):
 
+        # Update the layer
+        self.layer.step()
+
+        # Move the camera
         delta = self.timedelta.delta()
 
         xdist = int(self.xspeed * delta)
@@ -42,21 +42,25 @@ class ScrollingText(ScreenLayer):
 
         if xdist != 0 or ydist != 0:
             self.camera.move_ip(xdist, ydist)
-            self.timedelta.reset()
+            self.timedelta.reset()        
 
     def render(self):
+        im = self.layer.render()
 
-        text, text_box = self.font.render(self.text, pygame.Color(self.color))
-
-        # Add margins to drawing area
-        w, h = text.get_size()
-        w += 2 * MATRIX_WIDTH
-        h += 2 * MATRIX_HEIGHT
+        # Convert from PIL to pygame surface
+        img_str = im.tostring()
+        im = pygame.image.fromstring(img_str, im.size, "RGBA")
+        
+        # Create drawing area surrounded by margins on all sides
+        w, h = im.get_size()
+        dev_width, dev_height = self.device.size
+        w += 2 * dev_width
+        h += 2 * dev_height
         s = pygame.Surface((w, h), pygame.SRCALPHA)
         s.set_alpha(0)
 
-        # Add the text to the surface
-        s.blit(text, (MATRIX_WIDTH, MATRIX_HEIGHT))
+        # Add the layer to the surface
+        s.blit(im, (dev_width, dev_height))
 
         # Check for overflow
         bounds = s.get_rect()
@@ -77,4 +81,5 @@ class ScrollingText(ScreenLayer):
         img_str = pygame.image.tostring(view, "RGBA")
         self.im = Image.fromstring("RGBA", view.get_size(), img_str)
 
-        return self.im
+        return self.im        
+
