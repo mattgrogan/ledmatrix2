@@ -1,7 +1,7 @@
 from PIL import Image
 
 from server.components.screens.screen import Screen
-from server.components.layers.scrolling_text_layer import ScrollingText
+from server.components.layers.text_layer import TextLayer
 from server.components.screens.gif_screen_factory import GifScreenFactory
 
 class InfoScreen(Screen):
@@ -13,7 +13,7 @@ class InfoScreen(Screen):
         self.layers = []
         self.positions = []
 
-        txt = ScrollingText("Welcome to my world!", xspeed=10)
+        txt = TextLayer("Welcome to my world again")
 
         self.add_layer(txt, (0, 10))
 
