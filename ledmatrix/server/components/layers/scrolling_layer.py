@@ -11,6 +11,7 @@ class ScrollingLayer(ScreenLayer):
         self.layer = layer
         self.xspeed = xspeed
         self.yspeed = yspeed
+        self.is_paused = False
 
     def enter(self):
         w, h = self.device.size
@@ -25,11 +26,17 @@ class ScrollingLayer(ScreenLayer):
 
     def suspend(self):
         self.layer.suspend()
+        self.is_paused = True
 
     def resume(self):
         self.layer.resume()
+        self.timedelta.reset()
+        self.is_paused = False
 
     def step(self):
+
+        if self.is_paused:
+            return
 
         # Update the layer
         self.layer.step()

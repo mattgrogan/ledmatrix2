@@ -32,7 +32,7 @@ class MainScreenManager(ScreenManager):
     def handle_input(self, cmd):
         if cmd == "KEY_MODE":
             self.next()
-        else:
+        elif cmd is not None:
             self.screens[self.current_item].handle_input(cmd)
 
     def step(self):

@@ -10,6 +10,7 @@ class InfoScreen(Screen):
     def __init__(self, device):
 
         self.device = device
+        self.is_paused = False
 
         self.layers = []
         self.positions = []
@@ -36,10 +37,12 @@ class InfoScreen(Screen):
         pass
         
     def suspend(self):
-        pass
+        for layer in self.layers:
+            layer.suspend()
 
     def resume(self):
-        pass
+        for layer in self.layers:
+            layer.resume()
 
     def step(self):
         for layer in self.layers:
@@ -55,4 +58,10 @@ class InfoScreen(Screen):
 
 
     def handle_input(self, cmd):
-        pass
+        if cmd == "KEY_PLAYPAUSE":
+            self.is_paused = not self.is_paused
+
+            if self.is_paused:
+                self.suspend()
+            else:
+                self.resume()
