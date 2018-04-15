@@ -21,6 +21,8 @@ class ScrollingLayer(ScreenLayer):
         self.camera = pygame.Rect(w, h, w, h)
         self.timedelta = TimeDelta().reset()
 
+        self.is_paused = False
+
     def exit(self):
         self.layer.exit()
 
