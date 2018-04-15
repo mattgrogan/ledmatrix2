@@ -3,6 +3,7 @@ from server.components.screens.screen import Screen
 class GifScreen(Screen):
 
     def __init__(self, layers):
+        self.init()
         self.items = layers
         self.current_item = 0
         self.is_paused = False
@@ -30,6 +31,15 @@ class GifScreen(Screen):
     def enter(self):
         self.current_item = 0
         self.items[self.current_item].enter()
+        self.is_paused = False
+
+    def suspend(self):
+        self.items[self.current_item].suspend()
+        self.is_playing = False
+
+    def resume(self):
+        self.items[self.current_item].resume()
+        self.is_playing = True
 
     def exit(self):
         self.items[self.current_item].exit()

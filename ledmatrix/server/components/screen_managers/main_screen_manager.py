@@ -1,3 +1,6 @@
+import collections
+from PIL import Image
+
 from server.components.screen_managers.screen_manager import ScreenManager
 
 from server.components.screens.gif_screen_factory import GifScreenFactory
@@ -8,35 +11,59 @@ class MainScreenManager(ScreenManager):
     def __init__(self, device):
 
         self.device = device
+        self.screens = collections.deque()
 
-        info_screen = InfoScreen(device=device)
-        gif_screen = GifScreenFactory().from_folder("icons/gifs/")
+        self.add_screen(InfoScreen(device=device))
+        self.add_screen(GifScreenFactory().from_folder("icons/gifs/"))
 
-        self.screens = [info_screen, gif_screen]
-        self.current_item = 0
+    def add_screen(self, screen):
+        self.screens.append(screen)
+
+    @property
+    def current_screen(self):
+        return self.screens[0]
 
     def enter(self):
-        self.current_item = 0
-        self.screens[self.current_item].enter()
+        for screen in self.screens:
+            screen.enter()
 
     def next(self):
 
-        self.screens[self.current_item].exit()
+        # Pop the top item
+        screen = self.screens.popleft()
+        #screen.exit()
 
-        self.current_item += 1
-        if self.current_item >= len(self.screens):
-            self.current_item = 0
+        # Append it to the end
+        self.screens.append(screen)
 
-        self.screens[self.current_item].enter()
+        # Enter the top screen
+        #self.current_screen.enter()
 
     def handle_input(self, cmd):
         if cmd == "KEY_MODE":
             self.next()
         elif cmd is not None:
-            self.screens[self.current_item].handle_input(cmd)
+            for screen in self.screens:
+                screen.handle_input(cmd)
 
     def step(self):
-        self.screens[self.current_item].step()
+        """ Allow each screen to run logic """
+
+        for screen in self.screens:
+            screen.step()
 
     def render(self):
-        return self.screens[self.current_item].render()
+
+        # Create new background and paste other images on top
+        bg = Image.new("RGBA", self.device.size)
+
+        for screen in reversed(self.screens):
+            if not screen.is_popup:
+                # If this isn't a popup, it will cover all previous screens
+                bg = Image.new("RGBA", self.device.size)
+            
+            # Paste the screen on the background
+            im = screen.render()
+            bg.paste(im, mask=im)
+
+        return bg

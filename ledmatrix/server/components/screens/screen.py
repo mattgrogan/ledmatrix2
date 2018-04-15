@@ -1,7 +1,7 @@
 class Screen(object):
 
-    def __init__(self):
-        pass
+    def init(self):
+        self.is_popup = False
 
     def enter(self):
         raise NotImplementedError
