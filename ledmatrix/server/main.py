@@ -9,6 +9,7 @@ from messaging.command_connection import CommandConnection
 from messaging.image_connection import ImageConnection
 
 from server.components.screen_managers.main_screen_manager import MainScreenManager
+from server.components.devices.led_matrix_device import LedMatrixDevice
 
 FPS = 60
 
@@ -24,6 +25,9 @@ def main():
     
     done = False
 
+    # Create the device
+    device = LedMatrixDevice()
+
     # Set up the command connection
     cmd_connection = CommandConnection()
     cmd_connection.connect(CMD_HOST, CMD_PORT, as_receiver=True)
@@ -32,7 +36,7 @@ def main():
     img_connection = ImageConnection()
     img_connection.connect(IMG_HOST, IMG_PORT, as_receiver=False)
 
-    screen_manager = MainScreenManager()
+    screen_manager = MainScreenManager(device=device)
     screen_manager.enter()
 
     while(not done):

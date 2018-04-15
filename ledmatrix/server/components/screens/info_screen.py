@@ -4,12 +4,11 @@ from server.components.screens.screen import Screen
 from server.components.layers.scrolling_text_layer import ScrollingText
 from server.components.screens.gif_screen_factory import GifScreenFactory
 
-SCREEN_WIDTH = 32
-SCREEN_HEIGHT = 32
-
 class InfoScreen(Screen):
 
-    def __init__(self):
+    def __init__(self, device):
+
+        self.device = device
 
         self.layers = []
         self.positions = []
@@ -45,7 +44,7 @@ class InfoScreen(Screen):
             layer.step()
 
     def render(self):
-        bg = Image.new("RGBA", (SCREEN_WIDTH, SCREEN_HEIGHT))
+        bg = Image.new("RGBA", self.device.size)
         for i, layer in enumerate(self.layers):
             im = layer.render()
             bg.paste(im, box=self.positions[i], mask=im)

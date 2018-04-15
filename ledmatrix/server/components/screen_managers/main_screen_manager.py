@@ -5,9 +5,11 @@ from server.components.screens.info_screen import InfoScreen
 
 class MainScreenManager(ScreenManager):
 
-    def __init__(self):
+    def __init__(self, device):
 
-        info_screen = InfoScreen()
+        self.device = device
+
+        info_screen = InfoScreen(device=device)
         gif_screen = GifScreenFactory().from_folder("icons/gifs/")
 
         self.screens = [info_screen, gif_screen]
