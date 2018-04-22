@@ -10,7 +10,7 @@ class InfoScreen(Screen):
     def __init__(self, device):
 
         self.init()
-        self.is_popup = True
+        self.is_popup = False
 
         self.device = device
         self.is_paused = False

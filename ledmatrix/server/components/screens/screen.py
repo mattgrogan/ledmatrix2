@@ -21,5 +21,5 @@ class Screen(object):
     def render(self):
         raise NotImplementedError
 
-    def handle_input(self):
+    def handle_input(self, cmd):
         raise NotImplementedError

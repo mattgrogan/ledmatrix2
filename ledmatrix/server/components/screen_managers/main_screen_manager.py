@@ -33,13 +33,9 @@ class MainScreenManager(ScreenManager):
 
         # Pop the top item
         screen = self.screens.popleft()
-        #screen.exit()
 
         # Append it to the end
         self.screens.append(screen)
-
-        # Enter the top screen
-        #self.current_screen.enter()
 
     def handle_input(self, cmd):
         if cmd == "KEY_MODE":
