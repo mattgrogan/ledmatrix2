@@ -5,6 +5,7 @@ from server.components.screen_managers.screen_manager import ScreenManager
 
 from server.components.screens.gif_screen_factory import GifScreenFactory
 from server.components.screens.info_screen import InfoScreen
+from server.components.screens.clock_screen import ClockScreen
 
 class MainScreenManager(ScreenManager):
 
@@ -14,6 +15,7 @@ class MainScreenManager(ScreenManager):
         self.screens = collections.deque()
 
         self.add_screen(InfoScreen(device=device))
+        self.add_screen(ClockScreen(device=device))
         self.add_screen(GifScreenFactory().from_folder("icons/gifs/"))
 
     def add_screen(self, screen):

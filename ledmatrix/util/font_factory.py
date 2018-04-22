@@ -1,10 +1,10 @@
-import pygame, pygame.freetype
+import pygame, pygame.font
 
 class FontFactory(object):
 
     def from_file(self, filename, size):
 
-        font = pygame.freetype.Font(filename, size)
+        font = pygame.font.Font(filename, size)
 
         return font
 

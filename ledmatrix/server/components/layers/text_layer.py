@@ -1,8 +1,8 @@
 from PIL import Image
-import pygame
+import pygame, pygame.font
 
-from server.components.layers.screen_layer import ScreenLayer
 from util.font_factory import FontFactory
+from server.components.layers.screen_layer import ScreenLayer
 
 class TextLayer(ScreenLayer):
 
@@ -11,8 +11,9 @@ class TextLayer(ScreenLayer):
         self.size = size
         self.color = color
 
-        pygame.freetype.init()
-        self.font = FontFactory().by_size(self.size)
+        pygame.font.init()
+
+        self.font = FontFactory().by_size(size)
 
     def enter(self):
         pass
@@ -31,7 +32,7 @@ class TextLayer(ScreenLayer):
 
     def render(self):
 
-        text, text_box = self.font.render(self.text, pygame.Color(self.color))
+        text = self.font.render(self.text, False, pygame.Color(self.color))
 
         # Convert to PIL image for display
         img_str = pygame.image.tostring(text, "RGBA")
