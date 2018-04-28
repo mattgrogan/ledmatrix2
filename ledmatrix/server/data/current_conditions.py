@@ -3,6 +3,8 @@ import xml.etree.ElementTree as ET
 
 from server.data.throttle_mixin import Throttle_Mixin
 
+UPDATE_FREQUENCY = 60 * 10 # Every ten minutes
+
 class NOAA_Current_Observation(Throttle_Mixin):
   """
   This class handles connections to weather.gov for the current observation.
@@ -16,7 +18,7 @@ class NOAA_Current_Observation(Throttle_Mixin):
     self.current_obs = {}   # Dict to hold observation data
 
     # Use the Mixin to throttle requests
-    self.every(60 * 30, self._fetch_data)
+    self.every(UPDATE_FREQUENCY, self._fetch_data)
 
   def __getitem__(self, name):
     """
