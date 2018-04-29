@@ -1,0 +1,40 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>LED Matrix</title>
+  <meta name="description" content="The HTML5 Herald">
+
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
+    <p>Hello World</p>
+    <img id="img" src="/api/v1/current_image.png">
+  <script src="js/scripts.js"></script>
+  <script>
+    function refresh(node) {
+        var times = 100; // gap in Milli Seconds;
+
+        (function startRefresh() {
+            var address;
+            if(node.src.indexOf('?')>-1)
+                address = node.src.split('?')[0];
+            else 
+                address = node.src;
+                node.src = address+"?time="+new Date().getTime();
+
+            setTimeout(startRefresh,times);
+        })();
+    }
+
+    window.onload = function() {
+        var node = document.getElementById('img');
+        refresh(node);
+    }
+  </script>
+</body>
+</html>
