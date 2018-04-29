@@ -42,11 +42,7 @@ def display_index():
 @app.route('/api/v1/current_image.png')
 def display_img():
 
-    try:
-        im = image_conn.receive()
-    except zmq.ZMQError:
-        print "COULD NOT FIND IMAGE"
-        return ""
+    im = image_conn.receive()
 
     # while im is None:
     #      im = image_conn.receive()
