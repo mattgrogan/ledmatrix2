@@ -51,7 +51,7 @@ class ImageConnection(object):
             # Loop until the last image is received
 
             image = self.socket.recv()
-            im = Image.fromstring(mode, size, image[len(IMAGE_TOPIC):])
+            im = Image.frombytes(mode, size, image[len(IMAGE_TOPIC):])
 
         return im
 

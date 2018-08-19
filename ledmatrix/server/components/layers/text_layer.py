@@ -36,6 +36,6 @@ class TextLayer(ScreenLayer):
 
         # Convert to PIL image for display
         img_str = pygame.image.tostring(text, "RGBA")
-        im = Image.fromstring("RGBA", text.get_size(), img_str)
+        im = Image.frombytes("RGBA", text.get_size(), img_str)
 
         return im

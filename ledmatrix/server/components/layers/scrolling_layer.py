@@ -88,7 +88,7 @@ class ScrollingLayer(ScreenLayer):
 
         # Convert to PIL image for display
         img_str = pygame.image.tostring(view, "RGBA")
-        self.im = Image.fromstring("RGBA", view.get_size(), img_str)
+        self.im = Image.frombytes("RGBA", view.get_size(), img_str)
 
         return self.im        
 
