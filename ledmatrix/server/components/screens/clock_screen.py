@@ -8,7 +8,7 @@ from server.components.screens.gif_screen_factory import GifScreenFactory
 
 from server.data.current_conditions import NOAA_Current_Observation
 
-STATION = "KLGA"
+STATION = "KFRG"
 
 class ClockScreen(Screen):
 

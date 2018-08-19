@@ -14,9 +14,9 @@ class MainScreenManager(ScreenManager):
         self.device = device
         self.screens = collections.deque()
 
-        self.add_screen(InfoScreen(device=device))
+        #self.add_screen(InfoScreen(device=device))
         self.add_screen(ClockScreen(device=device))
-        self.add_screen(GifScreenFactory().from_folder("icons/gifs/"))
+        #self.add_screen(GifScreenFactory().from_folder("icons/gifs/"))
 
     def add_screen(self, screen):
         self.screens.append(screen)

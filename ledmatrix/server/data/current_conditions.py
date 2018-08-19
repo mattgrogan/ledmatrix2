@@ -43,7 +43,11 @@ class NOAA_Current_Observation(Throttle_Mixin):
 
     if r.status_code == requests.codes.ok:
       # Parse the data
-      root = ET.fromstring(r.content)
+      try:
+        root = ET.fromstring(r.content)
+      except:
+        return False
+        
       for child in root:
         self.current_obs[child.tag] = child.text
       return True
