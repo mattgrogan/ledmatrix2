@@ -66,7 +66,7 @@ class ImageConnection(object):
         im = im.convert(IMAGE_MODE)
 
         try:
-            self.socket.send(IMAGE_TOPIC + im.tostring())
+            self.socket.send(IMAGE_TOPIC + im.tobytes())
         except zmq.ZMQError:
             print "Unable to send image on %s" % self.addr
 

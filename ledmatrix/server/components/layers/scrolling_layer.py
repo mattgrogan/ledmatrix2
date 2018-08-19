@@ -57,7 +57,7 @@ class ScrollingLayer(ScreenLayer):
         im = self.layer.render()
 
         # Convert from PIL to pygame surface
-        img_str = im.tostring()
+        img_str = im.tobytes()
         im = pygame.image.fromstring(img_str, im.size, "RGBA")
         
         # Create drawing area surrounded by margins on all sides
