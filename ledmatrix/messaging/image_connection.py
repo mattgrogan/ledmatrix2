@@ -51,7 +51,7 @@ class ImageConnection(object):
             # Loop until the last image is received
 
             image = self.socket.recv()
-            im = Image.fromstring(mode, size, image[len(IMAGE_TOPIC):])
+            im = Image.frombytes(mode, size, image[len(IMAGE_TOPIC):])
 
         return im
 
@@ -66,7 +66,7 @@ class ImageConnection(object):
         im = im.convert(IMAGE_MODE)
 
         try:
-            self.socket.send(IMAGE_TOPIC + im.tostring())
+            self.socket.send(IMAGE_TOPIC + im.tobytes())
         except zmq.ZMQError:
             print "Unable to send image on %s" % self.addr
 
