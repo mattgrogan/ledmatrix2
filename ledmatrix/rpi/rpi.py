@@ -41,7 +41,7 @@ class Rpi(object):
             im = self.image_conn.receive()
             if im is not None:
                 self.display(im)
-                time.sleep(TICK_MS)
+                time.sleep(TICK_MS / 1000.0)
 
     def display(self, im):
         
